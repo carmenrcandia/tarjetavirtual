@@ -1,0 +1,320 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita scroll */
+  height: 100%; /* Asegura que ocupe todo el alto */
+  background: #fb7070;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: wheat; 
+}
+.contenedor {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; /* Centrado vertical */
+    align-items: center;     /* Centrado horizontal */
+    height: 100vh;           /* Ocupa toda la altura de la ventana */
+    width: 100%;             /* Opcional, asegura ocupación completa */
+}
+
+
+
+.caja {
+  position: relative;
+  left: -20px;      
+  width: 150px; /* ancho del objeto */
+  height: 180px; /* alto total (caja + cinta + estrellas)*/
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* Elementos de la caja */
+.cinta-de-regalo,
+.cinta-de-regalo-izquierda,
+.cinta-de-regalo-derecha,
+.cinta-de-regalo-centro,
+.regalos,
+.regalo-sombra,
+.regalo {
+  position: absolute;
+}
+
+.cinta-de-regalo {
+  bottom: 100px; /* ajustado para que quede encima */
+  left: calc(50% - 17px);
+  width: 34px;
+  height: 23px;
+  animation: cinta 1.5s ease-in-out infinite;
+}
+
+.cinta-de-regalo-centro {
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  background-color: #d22d2d;
+}
+
+.cinta-de-regalo-izquierda,
+.cinta-de-regalo-derecha {
+  box-shadow: 0 0 0 8px #fe3f3f inset; 
+  top: 3.4px;
+  width: 45px;
+  height: 57px;
+  background-color: #d22d2d;
+}
+
+.cinta-de-regalo-izquierda {
+  border-radius: 17px 0 34px 11px / 17px 0 34px 40px;
+  right: calc(100% - 12px);
+  transform: rotate(35deg);
+  transform-origin: 100% 15%;
+}
+.cinta-de-regalo-izquierda::before {
+  background-color: #fe3f3f;
+  border-radius: inherit;
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 42%, 100% 12%, 100% 100%, 0 100%);
+}
+
+.cinta-de-regalo-derecha {
+  border-radius: 0 17px 11px 34px / 0 17px 40px 34px;
+  left: calc(100% - 12px);
+  transform: rotate(-35deg);
+  transform-origin: 0% 15%;
+}
+
+.cinta-de-regalo-derecha::before {
+  background-color: #fe3f3f;
+  border-radius: inherit;
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 12%, 100% 42%, 100% 100%, 0 100%);
+}
+
+/* Base de la caja */
+.regalos {
+  animation: base 1.5s ease-in-out infinite;
+  background: linear-gradient(#fe3f3f, #fe3f3f) 50% 50% / 32px 100% no-repeat, #e9e3e3;
+  border-radius: 16px;
+  bottom: 0;
+  left: calc(50% - 60.2px);
+  width: 120.4px;
+  height: 80px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.regalo {
+  animation: techo 1.5s ease-in-out infinite;
+  background: linear-gradient(#fe3f3f, #fe3f3f) 50% 50% / 32px 101% no-repeat, #efffee;
+  bottom: 77px;
+  left: calc(50% - 66.5px);
+  width: 133px;
+  height: 34px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.regalo-sombra {
+  animation: sombra 1.5s ease-in-out infinite;
+  background-color: #00000010;
+  bottom: 77px;
+  left: calc(50% - 76.5px);
+  width: 133px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+/* Estrellas animadas */
+.icono-estrella {
+  position: absolute;
+  background-color: #fcff50;
+  clip-path: polygon(50% 0, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0 50%, 35% 35%);
+}
+
+.estrella1 { animation: estrella1 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.5);  bottom: 20px;  left: 120px; width: 28px; height: 28px; }
+.estrella2 { animation: estrella2 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.125); top: 10px;   left: 100px; width: 28px; height: 28px; }
+.estrella3 { animation: estrella1 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.25);  top: 60px;   left: 50px;  width: 20px; height: 20px; }
+.estrella4 { animation: estrella2 1.5s ease-in-out infinite; bottom: 5px;  left: 20px;  width: 28px; height: 28px; }
+.estrella5 { animation: estrella2 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.375); top: 20px;   left: 20px;  width: 20px; height: 20px; }
+
+/*Animaciones Regalo*/
+@keyframes cinta {
+  from,
+  50% {
+    transform: translateY(0) rotate(0);
+  }
+  62.5% {
+    transform: translateY(75%) rotate(0);
+  }
+  68.75% {
+    transform: translateY(-37.5%) rotate(15deg);
+  }
+  75% {
+    transform: translateY(-150%) rotate(5deg);
+  }
+  87.5% {
+    transform: translateY(65%) rotate(-3deg);
+  }
+  to {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes base {
+  from,
+  50% {
+    transform: translateY(0) scale(1, 1);
+  }
+  62.5% {
+    transform: translateY(4%) scale(1.12, 0.89);
+  }
+  75% {
+    transform: translateY(-11%) scale(0.92, 1.1);
+  }
+  87.5% {
+    transform: translateY(0%) scale(1.05, 0.9);
+  }
+  to {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes estrella1 {
+  from {
+    transform: scale(0) rotate(0);
+  }
+  25% {
+    animation-timing-function: ease-out;
+    transform: scale(1) rotate(0.25turn);
+  }
+  50%,
+  to {
+    transform: scale(0) rotate(0.5turn);
+  }
+}
+
+@keyframes estrella2 {
+  from {
+    transform: scale(0) rotate(0);
+  }
+  25% {
+    animation-timing-function: ease-out;
+    transform: scale(1) rotate(-0.25turn);
+  }
+  50%,
+  to {
+    transform: scale(0) rotate(-0.5turn);
+  }
+}
+
+/*Mensaje*/
+.happy-birthday {
+    position: absolute;
+    top: -150px; /* Ajusta la distancia vertical desde la torta */
+    left: 20%;
+    transform: translateX(-50%);
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    color: #ff4d6d; 
+    user-select: none;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+    animation: flotar 2s ease-in-out infinite,
+               brillo 1.5s infinite;
+}
+
+/* Modal */
+.modal-carta {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-carta.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/*Carta*/
+.carta {
+  background: linear-gradient(135deg, #eeeeff, #8575df);
+  padding: 32px;
+  width: 400px;
+  max-width: 80%;
+  border-radius: 12px;
+  border: 3px solid #c1b6ff; 
+  box-shadow: 0 0 25px rgba(163, 182, 247, 0.6);
+  font-family: 'Georgia', serif;
+  position: relative;
+  animation: aparecer 0.8s ease;
+}
+
+.carta h2 {
+  font-family: cursive;
+  font-size: 28px;
+  color: #080607; 
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.carta p {
+  font-size: 17px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.carta .firma {
+  margin-top: 32px;
+  font-style: italic;
+  text-align: right;
+  color: #323232;
+}
+
+/* Animación de entrada */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animación flotante */
+@keyframes flotar {
+    from, to {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(0, -8px);
+    }
+}
+
+@keyframes brillo {
+  from, to {
+    text-shadow: 0 0 3px #fff, 0 0 6px #ff4d6d, 0 0 9px #ff4d6d;
+  }
+  50% {
+    text-shadow: 0 0 6px #fff, 0 0 12px #ff4d6d, 0 0 18px #ff4d6d;
+  }
+}
